@@ -11,7 +11,7 @@ function(dataset,predictionFeature,parameters){
     #form (a string indicating the formula of the deisgn- 'linear','quad','cubic','cubicS')),
     #r2.threshold (numeric value indicating the r2 threshold value. If the data supplied provides r2 value greater 
     #than the threshold value, a stop message is returned.).
-    
+    Sys.setenv(DISPLAY=1) 
     dat<- dataset$dataEntry[,2]# data table
     
     ind.dat<- colnames(dat)
@@ -26,7 +26,8 @@ function(dataset,predictionFeature,parameters){
     #load(changeV)
     #load(ans.all)
 #data(sysdata, envir=environment())
-
+    changeV<- read.table('change_variables.txt',col.names='change_variables',colClasses='character')
+    load('trial1.RData')
 
     ans.all.new<- ans.all
     
