@@ -11,7 +11,7 @@ function(dataset,predictionFeature,parameters){
     #form (a string indicating the formula of the deisgn- 'linear','quad','cubic','cubicS')),
     #r2.threshold (numeric value indicating the r2 threshold value. If the data supplied provides r2 value greater 
     #than the threshold value, a stop message is returned.).
-    Sys.setenv(DISPLAY=1) 
+    #Sys.setenv(DISPLAY=1) 
     dat<- dataset$dataEntry[,2]# data table
     
     ind.dat<- colnames(dat)
@@ -54,16 +54,15 @@ function(dataset,predictionFeature,parameters){
     #res0<- f.quick.con(ans.all.new,validate=T)#
     #graphics.off()
     #.ypos <- 95
-    devAskNewPage(ask = FALSE)	
-options(device.ask.default = FALSE)
-  
-    # run proast & save print out in file
+    
     sink("report_from_screen.txt",append=TRUE)
     assign(".ypos", 95, envir = .GlobalEnv)
-
-    #devAskNewPage(ask = FALSE)	
+    #Sys.setenv(DISPLAY=:1)
+    devAskNewPage(ask = TRUE)	
+    options(device.ask.default = FALSE)
     res1<- f.quick.con(ans.all.new,validate=T)#
     sink()
+    
     #sink.number() 
     closeAllConnections()
 
