@@ -12,14 +12,20 @@ function(dataset,predictionFeature,parameters){
     #r2.threshold (numeric value indicating the r2 threshold value. If the data supplied provides r2 value greater 
     #than the threshold value, a stop message is returned.).
     #Sys.setenv(DISPLAY=1) 
-    dat<- dataset$dataEntry[,2]# data table
-    
-    ind.dat<- colnames(dat)
+    dat<- dataset$dataEntry$values#dataset$dataEntry[,3]# data table
+    dim.dat<- dim(dat)
     
     dat1.yname<- predictionFeature# dat1$predictionFeature #string to indicate dependent variable
+    
+    ind.dat<- colnames(dat)
+    sel.dat<- seq(2,2*dim.dat[2],by=2)
+    dat.names<- unlist(strsplit(dataset$features[,1],"\""))[sel.dat]
+    colnames(dat)<- dat.names
+    
     depend.indx<- which(colnames(dat) %in% dat1.yname)
     dat1.xname<- parameters$indiVariable# name
     indi.indx<- which(colnames(dat) %in% dat1.xname) 
+    
     
     #load('.trial1.RData')# includes ans.all
     #load('.changeV.rda')# inlcudes changeV data.frame with names of the variables in ans.all that need to change
@@ -29,7 +35,7 @@ function(dataset,predictionFeature,parameters){
     changeV<- read.table('change_variables.txt',col.names='change_variables',colClasses='character')
     load('trial1.RData')
 
-    ans.all.new<- ans.all
+    ans.all.new<- if(is.null(parameters$ans.all)==TRUE){ans.all}else{parameters$ans.all}
     
     names.ans.all<- names(ans.all)
     pos.ans.all<- which(names(ans.all) %in% changeV[,1])
@@ -149,8 +155,8 @@ function(dataset,predictionFeature,parameters){
     l1<- list(logLik=calc5)
     
     outP<- list(singleCalculations=list(reportFromScreen=unbox(paste(rfs,collapse=' '))),
+                BMD=list(BMD=res1$CED,BMDU=NA,BMDL=NA),
                 arrayCalculations=l1,figures=unbox(c.fig))
-    
     
     #unlink('.trial1.RData')
     
