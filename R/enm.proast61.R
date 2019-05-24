@@ -72,7 +72,7 @@ function(dataset,predictionFeature,parameters){
     #sink.number() 
     #closeAllConnections()
     graphics.off()
-    
+    #apply(as.matrix(x),1,dev.off)
 
     
     #read print out
