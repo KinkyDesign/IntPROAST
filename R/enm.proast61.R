@@ -70,8 +70,9 @@ function(dataset,predictionFeature,parameters){
     sink()
     
     #sink.number() 
-    closeAllConnections()
-
+    #closeAllConnections()
+    graphics.off()
+    
 
     
     #read print out
@@ -154,8 +155,19 @@ function(dataset,predictionFeature,parameters){
     calc5<- list(colNames=colnames(liks.mat.s),values=x1)
     l1<- list(logLik=calc5)
     
+    mods.mat<- res1$model.sublist
+    len.mat<- length(res1$model.sublist)
+    names.res1<- names(res1)
+    BMD.All<- matrix(0,len.mat,3)
+    rownames(BMD.All)<- mods.mat
+    colnames(BMD.All)<- c('BMD','BMDL','BMDU')
+    for(i in 1:len.mat){
+        BMD.in<- which(names.res1==mods.mat[i])
+        BMD.All[i,1:3]<- c(res1[[BMD.in]]$CED,res1[[BMD.in]]$conf.int)
+        }
+    
     outP<- list(singleCalculations=list(reportFromScreen=unbox(paste(rfs,collapse=' '))),
-                BMD=list(BMD=res1$CED,BMDU=NA,BMDL=NA),
+                BMD=list(BMD=BMD.All),
                 arrayCalculations=l1,figures=unbox(c.fig))
     
     #unlink('.trial1.RData')
