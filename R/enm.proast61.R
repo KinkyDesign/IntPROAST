@@ -1,3 +1,4 @@
+
 enm.proast61 <-
 function(dataset,predictionFeature,parameters){
     #dataset:= list of 2 objects - 
@@ -19,13 +20,12 @@ function(dataset,predictionFeature,parameters){
     
     ind.dat<- colnames(dat)
     sel.dat<- seq(2,2*dim.dat[2],by=2)
-    dat.names<- unlist(strsplit(dataset$features[,1],"\""))[sel.dat]
+    dat.names<- unlist(strsplit(dataset$features[order(dataset$features[,2]),1],"\""))[sel.dat]
     colnames(dat)<- dat.names
     
     depend.indx<- which(colnames(dat) %in% dat1.yname)
     dat1.xname<- parameters$indiVariable# name
     indi.indx<- which(colnames(dat) %in% dat1.xname) 
-    
     
     #load('.trial1.RData')# includes ans.all
     #load('.changeV.rda')# inlcudes changeV data.frame with names of the variables in ans.all that need to change
@@ -45,7 +45,7 @@ function(dataset,predictionFeature,parameters){
     ans.all.new[[pos.ans.all[2]]]<- depend.indx #yans index
     names(ans.all.new[[pos.ans.all[2]]])<- dat1.yname #yans name
     ans.all.new[[pos.ans.all[3]]]<- getwd() #working dir
-    ans.all.new[[pos.ans.all[4]]]<-  dataset$datasetURI #data.name
+    ans.all.new[[pos.ans.all[4]]]<-  dataset$'_id'#datasetURI #data.name
     ans.all.new[[pos.ans.all[5]]]<- dat #odt - dataset
     ans.all.new[[pos.ans.all[6]]]<- ncol(dat) #number of columns (i.e. variables) in data set
     ans.all.new[[pos.ans.all[7]]]<- colnames(dat) #varnames
@@ -67,6 +67,7 @@ function(dataset,predictionFeature,parameters){
     devAskNewPage(ask = TRUE)	
     options(device.ask.default = FALSE)
     res1<- f.quick.con(ans.all.new,validate=T)#
+    
     sink()
     
     #sink.number() 
