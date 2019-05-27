@@ -72,7 +72,7 @@ function(dataset,predictionFeature,parameters){
     
     #sink.number() 
     #closeAllConnections()
-    graphics.off()
+
     #apply(as.matrix(x),1,dev.off)
 
     
@@ -170,6 +170,8 @@ function(dataset,predictionFeature,parameters){
     outP<- list(singleCalculations=list(reportFromScreen=unbox(paste(rfs,collapse=' '))),
                 BMD=list(BMD=BMD.All),
                 arrayCalculations=l1,figures=unbox(c.fig))
+  
+      graphics.off()
     
     #unlink('.trial1.RData')
     
