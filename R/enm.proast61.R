@@ -19,8 +19,9 @@ function(dataset,predictionFeature,parameters){
     dat1.yname<- predictionFeature# dat1$predictionFeature #string to indicate dependent variable
     
     ind.dat<- colnames(dat)
-    sel.dat<- seq(2,2*dim.dat[2],by=2)
-    dat.names<- unlist(strsplit(dataset$features[order(dataset$features[,2]),1],"\""))[sel.dat]
+    #sel.dat<- seq(2,2*dim.dat[2],by=2)
+    #dat.names<- unlist(strsplit(dataset$features[order(dataset$features[,2]),3],"\""))[sel.dat]
+    dat.names<- dataset$features[order(dataset$features[,2]),3]
     colnames(dat)<- dat.names
     
     depend.indx<- which(colnames(dat) %in% dat1.yname)
@@ -35,7 +36,7 @@ function(dataset,predictionFeature,parameters){
     changeV<- read.table('change_variables.txt',col.names='change_variables',colClasses='character')
     load('trial1.RData')
 
-    ans.all.new<- if(is.null(parameters$ans.all)==TRUE){ans.all}else{parameters$ans.all}
+    ans.all.new<- if(is.null(parameters$ans.all)==FALSE){ans.all}else{parameters$ans.all}
     
     names.ans.all<- names(ans.all)
     pos.ans.all<- which(names(ans.all) %in% changeV[,1])
@@ -67,7 +68,6 @@ function(dataset,predictionFeature,parameters){
     devAskNewPage(ask = TRUE)	
     options(device.ask.default = FALSE)
     res1<- f.quick.con(ans.all.new,validate=T)#
-    
     sink()
     
     #sink.number() 
